@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:latest
+#    command: /bin/bash -c "apt-get update && apt-get install -y locales && locale-gen ru_RU.UTF-8"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_PASSWORD: "root"
+      MYSQL_DATABASE: "library_new"
+      LANG: ru_RU.UTF-8
+      LANGUAGE: ru_RU:ru
+      LC_ALL: ru_RU.UTF-8
+    ports:
+      - '33065:3306'
+    volumes:
+      - ./data/edtechDump.sql:/docker-entrypoint-initdb.d/edtechDump.sql
+volumes:
+  db:
+    driver: local
+
+    
