@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class StudentDaoImpl implements StudentDao {
-    private final Connection connection;
+    private Connection connection;
 
     public StudentDaoImpl(Connection connection) {
         this.connection = connection;

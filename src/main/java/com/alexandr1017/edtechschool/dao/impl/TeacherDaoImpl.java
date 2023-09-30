@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherDaoImpl implements TeacherDao {
-    private final Connection connection;
+    private Connection connection;
 
     public TeacherDaoImpl(Connection connection) {
         this.connection = connection;

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDaoImpl implements CourseDao {
-    private final Connection connection;
+    private Connection connection;
 
 
     public CourseDaoImpl(Connection connection) {

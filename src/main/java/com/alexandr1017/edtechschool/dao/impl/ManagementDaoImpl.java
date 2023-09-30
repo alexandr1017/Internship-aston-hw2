@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class ManagementDaoImpl implements ManagementDao {
 
 
-    private final Connection connection;
+    private Connection connection;
 
     public ManagementDaoImpl(Connection connection) {
         this.connection = connection;
