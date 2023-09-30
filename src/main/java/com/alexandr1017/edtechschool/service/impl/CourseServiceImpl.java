@@ -1,7 +1,6 @@
 package com.alexandr1017.edtechschool.service.impl;
 
 import com.alexandr1017.edtechschool.dao.CourseDao;
-import com.alexandr1017.edtechschool.dao.impl.CourseDaoImpl;
 import com.alexandr1017.edtechschool.dto.CourseDto;
 import com.alexandr1017.edtechschool.dto.StudentDto;
 import com.alexandr1017.edtechschool.exception.ItemNotFoundException;
@@ -17,14 +16,16 @@ import java.util.stream.Collectors;
 
 public class CourseServiceImpl implements CourseService {
 
-    private static final CourseService INSTANCE = new CourseServiceImpl();
+    private static final CourseServiceImpl INSTANCE = new CourseServiceImpl();
 
-    private CourseDao courseDao = CourseDaoImpl.getInstance();
+    private CourseDao courseDao;
 
     private CourseServiceImpl() {
     }
 
-    private CourseServiceImpl(CourseDao courseDao) {
+
+
+    public void setCourseDao(CourseDao courseDao) {
         this.courseDao = courseDao;
     }
 
@@ -98,10 +99,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
 
-    public static CourseService getInstance() {
+    public static CourseServiceImpl getInstance() {
         return INSTANCE;
     }
-    public static CourseService getInstance(CourseDao courseDao) {
-        return new CourseServiceImpl(courseDao);
-    }
+
 }

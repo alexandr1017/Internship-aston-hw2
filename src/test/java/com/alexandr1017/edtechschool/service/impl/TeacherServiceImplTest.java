@@ -1,11 +1,12 @@
 package com.alexandr1017.edtechschool.service.impl;
 
+
 import com.alexandr1017.edtechschool.dao.TeacherDao;
 import com.alexandr1017.edtechschool.dto.TeacherDto;
 import com.alexandr1017.edtechschool.exception.ItemNotFoundException;
 import com.alexandr1017.edtechschool.model.Course;
 import com.alexandr1017.edtechschool.model.Teacher;
-import com.alexandr1017.edtechschool.service.TeacherService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -18,10 +19,15 @@ import static org.mockito.Mockito.when;
 
 class TeacherServiceImplTest {
 
-    private final TeacherDao teacherDao = Mockito.mock(TeacherDao.class);
-    private final TeacherService teacherService = TeacherServiceImpl.getInstance(teacherDao);
+    private  TeacherDao teacherDao;
+    private  TeacherServiceImpl teacherService;
 
-
+    @BeforeEach
+    void setUp() {
+        teacherDao = Mockito.mock(TeacherDao.class);
+        teacherService = TeacherServiceImpl.getInstance();
+        teacherService.setTeacherDao(teacherDao);
+    }
     @Test
     void findAll() {
         Teacher teacher1 = new Teacher();

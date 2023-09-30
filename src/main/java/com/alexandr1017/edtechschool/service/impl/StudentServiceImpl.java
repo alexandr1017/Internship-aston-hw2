@@ -3,7 +3,7 @@ package com.alexandr1017.edtechschool.service.impl;
 
 import com.alexandr1017.edtechschool.dao.StudentDao;
 
-import com.alexandr1017.edtechschool.dao.impl.StudentDaoImpl;
+
 import com.alexandr1017.edtechschool.dto.CourseDto;
 import com.alexandr1017.edtechschool.dto.StudentDto;
 import com.alexandr1017.edtechschool.exception.ItemNotFoundException;
@@ -13,19 +13,19 @@ import com.alexandr1017.edtechschool.model.Student;
 import com.alexandr1017.edtechschool.service.StudentService;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class StudentServiceImpl implements StudentService {
-    private static final StudentService INSTANCE = new StudentServiceImpl();
-    private StudentDao studentDao = StudentDaoImpl.getInstance();
+    private static final StudentServiceImpl INSTANCE = new StudentServiceImpl();
+    private StudentDao studentDao;
 
 
     private StudentServiceImpl() {
     }
 
-    private StudentServiceImpl(StudentDao studentDao) {
+    public void setStudentDao(StudentDao studentDao) {
         this.studentDao = studentDao;
     }
 
@@ -91,11 +91,8 @@ public class StudentServiceImpl implements StudentService {
         studentDao.deleteStudentById(studentId);
     }
 
-    public static StudentService getInstance() {
+    public static StudentServiceImpl getInstance() {
         return INSTANCE;
     }
 
-    public static StudentService getInstance(StudentDao studentDao) {
-        return new StudentServiceImpl(studentDao);
-    }
 }

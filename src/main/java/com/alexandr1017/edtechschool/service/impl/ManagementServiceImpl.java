@@ -1,10 +1,7 @@
 package com.alexandr1017.edtechschool.service.impl;
 
 import com.alexandr1017.edtechschool.dao.*;
-import com.alexandr1017.edtechschool.dao.impl.CourseDaoImpl;
-import com.alexandr1017.edtechschool.dao.impl.ManagementDaoImpl;
-import com.alexandr1017.edtechschool.dao.impl.StudentDaoImpl;
-import com.alexandr1017.edtechschool.dao.impl.TeacherDaoImpl;
+
 import com.alexandr1017.edtechschool.exception.ItemNotFoundException;
 import com.alexandr1017.edtechschool.model.Course;
 import com.alexandr1017.edtechschool.model.Student;
@@ -14,18 +11,21 @@ import com.alexandr1017.edtechschool.service.ManagementService;
 public class ManagementServiceImpl implements ManagementService {
 
 
-    private static final ManagementService INSTANCE = new ManagementServiceImpl();
+    private static final ManagementServiceImpl INSTANCE = new ManagementServiceImpl();
 
-    private ManagementDao managementDao = ManagementDaoImpl.getInstance();
-    private final CourseDao courseDao = CourseDaoImpl.getInstance();
-    private final StudentDao studentDao = StudentDaoImpl.getInstance();
-    private final TeacherDao teacherDao = TeacherDaoImpl.getInstance();
+    private ManagementDao managementDao;
+    private CourseDao courseDao;
+    private StudentDao studentDao;
+    private TeacherDao teacherDao;
 
     private ManagementServiceImpl() {
     }
 
-    private ManagementServiceImpl(ManagementDao managementDao) {
+    public void setManagementDaos(ManagementDao managementDao, CourseDao courseDao, StudentDao studentDao, TeacherDao teacherDao) {
         this.managementDao = managementDao;
+        this.courseDao = courseDao;
+        this.studentDao = studentDao;
+        this.teacherDao = teacherDao;
     }
 
 
@@ -80,12 +80,9 @@ public class ManagementServiceImpl implements ManagementService {
     }
 
 
-
-    public static ManagementService getInstance() {
+    public static ManagementServiceImpl getInstance() {
         return INSTANCE;
     }
 
-    public static ManagementService getInstance(ManagementDao managementDao) {
-        return new ManagementServiceImpl(managementDao);
-    }
+
 }

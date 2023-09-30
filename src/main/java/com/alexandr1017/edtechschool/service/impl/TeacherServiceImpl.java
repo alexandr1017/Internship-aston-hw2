@@ -3,7 +3,7 @@ package com.alexandr1017.edtechschool.service.impl;
 
 import com.alexandr1017.edtechschool.dao.TeacherDao;
 
-import com.alexandr1017.edtechschool.dao.impl.TeacherDaoImpl;
+
 import com.alexandr1017.edtechschool.dto.CourseDto;
 
 import com.alexandr1017.edtechschool.dto.TeacherDto;
@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 
 public class TeacherServiceImpl implements TeacherService {
 
-    private static final TeacherService INSTANCE = new TeacherServiceImpl();
-    private TeacherDao teacherDao = TeacherDaoImpl.getInstance();
+    private static final TeacherServiceImpl INSTANCE = new TeacherServiceImpl();
+    private TeacherDao teacherDao;
 
     private TeacherServiceImpl() {
     }
 
-    private TeacherServiceImpl(TeacherDao teacherDao) {
+    public void setTeacherDao(TeacherDao teacherDao) {
         this.teacherDao = teacherDao;
     }
 
@@ -89,13 +89,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
 
-    public static TeacherService getInstance() {
+    public static TeacherServiceImpl getInstance() {
         return INSTANCE;
     }
 
-    public static TeacherService getInstance(TeacherDao teacherDao) {
-        return new TeacherServiceImpl(teacherDao);
-    }
+
 
 
 }

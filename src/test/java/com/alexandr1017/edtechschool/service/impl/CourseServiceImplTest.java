@@ -6,6 +6,7 @@ import com.alexandr1017.edtechschool.exception.ItemNotFoundException;
 import com.alexandr1017.edtechschool.model.Course;
 import com.alexandr1017.edtechschool.model.Student;
 import com.alexandr1017.edtechschool.service.CourseService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -18,8 +19,16 @@ import static org.mockito.Mockito.when;
 
 class CourseServiceImplTest {
 
-    private final CourseDao courseDao = Mockito.mock(CourseDao.class);
-    private final CourseService courseService = CourseServiceImpl.getInstance(courseDao);
+    private CourseDao courseDao;
+    private CourseServiceImpl courseService;
+
+    @BeforeEach
+    void setUp() {
+        courseDao = Mockito.mock(CourseDao.class);
+        courseService = CourseServiceImpl.getInstance();
+        courseService.setCourseDao(courseDao);
+    }
+
 
     @Test
     void findAll() {

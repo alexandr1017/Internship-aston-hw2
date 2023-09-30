@@ -9,9 +9,8 @@ import com.alexandr1017.edtechschool.model.Course;
 import com.alexandr1017.edtechschool.model.Student;
 import com.alexandr1017.edtechschool.model.Teacher;
 
-import com.alexandr1017.edtechschool.service.ManagementService;
 
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -21,14 +20,28 @@ import static org.mockito.Mockito.when;
 class ManagementServiceImplTest {
 
 
-    private final CourseDao courseDao = Mockito.mock(CourseDao.class);
+    private CourseDao courseDao;
 
-    private final StudentDao studentDao = Mockito.mock(StudentDao.class);
+    private StudentDao studentDao;
 
-    private final TeacherDao teacherDao = Mockito.mock(TeacherDao.class);
+    private TeacherDao teacherDao;
 
-    private final ManagementDao managementDao = Mockito.mock(ManagementDao.class);
-    private final ManagementService managementService = ManagementServiceImpl.getInstance(managementDao);
+    private ManagementDao managementDao;
+    private ManagementServiceImpl managementService;
+
+
+    @BeforeEach
+    void setUp() {
+        managementDao = Mockito.mock(ManagementDao.class);
+        courseDao = Mockito.mock(CourseDao.class);
+        studentDao = Mockito.mock(StudentDao.class);
+        teacherDao = Mockito.mock(TeacherDao.class);
+        managementService = ManagementServiceImpl.getInstance();
+        managementService.setManagementDaos(managementDao, courseDao, studentDao, teacherDao);
+
+
+    }
+
 
     @Test
     void addStudentToCourse() {
