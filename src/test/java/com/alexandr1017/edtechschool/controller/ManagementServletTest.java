@@ -42,7 +42,9 @@ class ManagementServletTest {
         when(request.getParameter("studentId")).thenReturn(studentId);
         when(request.getParameter("courseId")).thenReturn(courseId);
 
-        new ManagementServlet(managementService).doPost(request, response);
+        ManagementServlet managementServlet = new ManagementServlet();
+        managementServlet.setManagementService(managementService);
+        managementServlet.doPost(request, response);
 
         verify(managementService).addStudentToCourse(Integer.parseInt(studentId), Integer.parseInt(courseId));
         verify(response).setStatus(HttpServletResponse.SC_OK);
@@ -58,7 +60,9 @@ class ManagementServletTest {
         when(request.getParameter("studentId")).thenReturn(studentId);
         when(request.getParameter("courseId")).thenReturn(courseId);
 
-        new ManagementServlet(managementService).doDelete(request, response);
+        ManagementServlet managementServlet = new ManagementServlet();
+        managementServlet.setManagementService(managementService);
+        managementServlet.doDelete(request, response);
 
         verify(managementService).removeStudentFromCourse(Integer.parseInt(studentId), Integer.parseInt(courseId));
         verify(response).setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -76,7 +80,9 @@ class ManagementServletTest {
         when(request.getParameter("courseId")).thenReturn(courseId);
         when(request.getParameter("action")).thenReturn(action);
 
-        new ManagementServlet(managementService).doPut(request, response);
+        ManagementServlet managementServlet = new ManagementServlet();
+        managementServlet.setManagementService(managementService);
+        managementServlet.doPut(request, response);
 
         if ("add".equals(action)) {
             verify(managementService).addTeacherToCourse(Integer.parseInt(teacherId), Integer.parseInt(courseId));

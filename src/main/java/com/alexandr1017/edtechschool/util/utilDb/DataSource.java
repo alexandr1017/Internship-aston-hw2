@@ -1,40 +1,44 @@
 package com.alexandr1017.edtechschool.util.utilDb;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
-public final class DataSource {
-
+public class DataSource {
     private static final String URL_KEY = "db.url";
     public static final String USER_KEY = "db.user";
     public static final String PASS_KEY = "db.pass";
+    private static HikariConfig config = new HikariConfig();
+    private static HikariDataSource ds;
 
     static {
-        loadDriver();
-    }
-
-    private static void loadDriver() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            config.setJdbcUrl(PropertiesUtil.get(URL_KEY));
+            config.setUsername(PropertiesUtil.get(USER_KEY));
+            config.setPassword(PropertiesUtil.get(PASS_KEY));
+            ds = new HikariDataSource(config);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     private DataSource() {
     }
 
-    public static Connection getConnection() {
-        try {
-            return DriverManager.getConnection(
-                    PropertiesUtil.get(URL_KEY),
-                    PropertiesUtil.get(USER_KEY),
-                    PropertiesUtil.get(PASS_KEY)
-            );
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static HikariDataSource getDataSource() {
+        return ds;
+    }
+
+    public static void setJdbcUrl(String url) {
+        config.setJdbcUrl(url);
+    }
+
+    public static void setUsername(String username) {
+        config.setUsername(username);
+    }
+
+    public static void setPassword(String password) {
+        config.setPassword(password);
     }
 }

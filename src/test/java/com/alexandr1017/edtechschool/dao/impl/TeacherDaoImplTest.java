@@ -5,8 +5,7 @@ import com.alexandr1017.edtechschool.model.Course;
 import com.alexandr1017.edtechschool.model.Teacher;
 import org.junit.jupiter.api.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,10 +22,9 @@ class TeacherDaoImplTest extends AbstractDaoTest {
 
     @BeforeEach
     public void init() throws SQLException {
-        Connection connection = DriverManager.getConnection(mysqlContainer.getJdbcUrl(), mysqlContainer.getUsername(), mysqlContainer.getPassword());
-        courseDao = new CourseDaoImpl(connection);
-        teacherDao = new TeacherDaoImpl(connection);
-        managementDao = new ManagementDaoImpl(connection);
+        courseDao = new CourseDaoImpl(AbstractDaoTest.getDataSource());
+        teacherDao = new TeacherDaoImpl(AbstractDaoTest.getDataSource());
+        managementDao = new ManagementDaoImpl(AbstractDaoTest.getDataSource());
     }
 
     @Test

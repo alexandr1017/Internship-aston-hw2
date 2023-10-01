@@ -5,6 +5,7 @@ import com.alexandr1017.edtechschool.dao.TeacherDao;
 import com.alexandr1017.edtechschool.model.Course;
 import com.alexandr1017.edtechschool.model.Teacher;
 import com.alexandr1017.edtechschool.util.utilDb.DataSource;
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,21 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherDaoImpl implements TeacherDao {
-    private Connection connection;
+    private HikariDataSource dataSource;
 
-    public TeacherDaoImpl(Connection connection) {
-        this.connection = connection;
+    public TeacherDaoImpl(HikariDataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public static TeacherDaoImpl getInstance() {
-        return new TeacherDaoImpl(DataSource.getConnection());
+        return new TeacherDaoImpl(DataSource.getDataSource());
     }
 
 
     // CREATE
     @Override
     public void addTeacher(Teacher teacher) {
-        try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO teacher (name, age, hire_date) VALUES (?, ?, ?)");) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("INSERT INTO teacher (name, age, hire_date) VALUES (?, ?, ?)");) {
             stmt.setString(1, teacher.getName());
             stmt.setInt(2, teacher.getAge());
             stmt.setDate(3, java.sql.Date.valueOf(teacher.getHireDate()));
@@ -44,7 +46,8 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public Teacher findTeacherById(int teacherId) {
         Teacher teacher = null;
-        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM teacher WHERE id = ?");) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM teacher WHERE id = ?");) {
             stmt.setInt(1, teacherId);
             ResultSet rs = stmt.executeQuery();
 
@@ -66,7 +69,8 @@ public class TeacherDaoImpl implements TeacherDao {
     public List<Teacher> findAll() {
         ArrayList<Teacher> teachers = new ArrayList<>();
         Teacher teacher;
-        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM teacher")) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM teacher")) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 teacher = new Teacher();
@@ -87,7 +91,8 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void updateTeacher(Teacher teacher) {
 
-        try (PreparedStatement stmt = connection.prepareStatement("UPDATE teacher SET name = ?, age = ?, hire_date = ? WHERE id = ?");
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("UPDATE teacher SET name = ?, age = ?, hire_date = ? WHERE id = ?");
         ) {
             stmt.setString(1, teacher.getName());
             stmt.setInt(2, teacher.getAge());
@@ -103,7 +108,8 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void deleteTeacher(int teacherId) {
 
-        try (PreparedStatement updateStmt = connection.prepareStatement("UPDATE course SET teacher_id = NULL WHERE teacher_id = ?");
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement updateStmt = connection.prepareStatement("UPDATE course SET teacher_id = NULL WHERE teacher_id = ?");
              PreparedStatement deleteStmt = connection.prepareStatement("DELETE FROM teacher WHERE id = ?")
         ) {
             updateStmt.setInt(1, teacherId);
@@ -120,7 +126,8 @@ public class TeacherDaoImpl implements TeacherDao {
 
     public List<Course> findCoursesForTeacher(Teacher teacher) {
         List<Course> courses = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM course WHERE teacher_id = ?")) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM course WHERE teacher_id = ?")) {
             stmt.setInt(1, teacher.getId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

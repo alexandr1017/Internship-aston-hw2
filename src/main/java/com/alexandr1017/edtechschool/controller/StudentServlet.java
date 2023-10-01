@@ -22,15 +22,13 @@ import java.util.Collection;
 
 @WebServlet("/students/*")
 public class StudentServlet extends HttpServlet {
-    private StudentService studentService;
+    private StudentService studentService = StudentServiceImpl.getInstance();
 
-    public StudentServlet() {
-        this.studentService = StudentServiceImpl.getInstance();
-    }
 
-    public StudentServlet(StudentService studentService) {
+    public void setStudentService(StudentService studentService) {
         this.studentService = studentService;
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pathInfo = req.getPathInfo();

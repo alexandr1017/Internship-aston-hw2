@@ -14,13 +14,9 @@ import java.io.IOException;
 @WebServlet("/management/*")
 public class ManagementServlet extends HttpServlet {
 
-    private ManagementService managementService;
+    private ManagementService managementService = ManagementServiceImpl.getInstance();
 
-    public ManagementServlet() {
-        this.managementService = ManagementServiceImpl.getInstance();
-    }
-
-    public ManagementServlet(ManagementService managementService) {
+    public void setManagementService(ManagementService managementService) {
         this.managementService = managementService;
     }
 

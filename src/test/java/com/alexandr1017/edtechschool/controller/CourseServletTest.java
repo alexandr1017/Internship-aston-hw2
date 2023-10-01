@@ -46,7 +46,9 @@ class CourseServletTest {
 
         when(courseService.findAll()).thenReturn(courseDtos);
 
-        new CourseServlet(courseService).doGet(request, response);
+        CourseServlet courseServlet = new CourseServlet();
+        courseServlet.setCourseService(courseService);
+        courseServlet.doGet(request, response);
 
         verify(response).setContentType("application/json");
         verify(response).setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -68,7 +70,9 @@ class CourseServletTest {
 
         when(courseService.getCourseById(Integer.parseInt(courseId))).thenReturn(courseDto);
 
-        new CourseServlet(courseService).doGet(request, response);
+        CourseServlet courseServlet = new CourseServlet();
+        courseServlet.setCourseService(courseService);
+        courseServlet.doGet(request, response);
 
         verify(response).setContentType("application/json");
         verify(response).setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -76,7 +80,6 @@ class CourseServletTest {
         assertTrue(result.contains("\"id\":1"));
         assertTrue(result.contains("\"name\":\"Test Course\""));
     }
-
 
 
     @Test
@@ -95,7 +98,9 @@ class CourseServletTest {
 
         courseDto.setName("Test Course");
 
-        new CourseServlet(courseService).doPost(request, response);
+        CourseServlet courseServlet = new CourseServlet();
+        courseServlet.setCourseService(courseService);
+        courseServlet.doPost(request, response);
 
         verify(response).setStatus(HttpServletResponse.SC_OK);
     }
@@ -116,7 +121,9 @@ class CourseServletTest {
 
         courseDto.setName("Test Course");
 
-        new CourseServlet(courseService).doPut(request, response);
+        CourseServlet courseServlet = new CourseServlet();
+        courseServlet.setCourseService(courseService);
+        courseServlet.doPut(request, response);
 
         verify(response).setStatus(HttpServletResponse.SC_OK);
     }
@@ -127,7 +134,9 @@ class CourseServletTest {
 
         when(request.getPathInfo()).thenReturn("/1");
 
-        new CourseServlet(courseService).doDelete(request, response);
+        CourseServlet courseServlet = new CourseServlet();
+        courseServlet.setCourseService(courseService);
+        courseServlet.doDelete(request, response);
 
         verify(response).setStatus(HttpServletResponse.SC_NO_CONTENT);
     }

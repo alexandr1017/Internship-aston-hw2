@@ -18,13 +18,10 @@ import java.util.Collection;
 @WebServlet("/teachers/*")
 public class TeacherServlet extends HttpServlet {
 
-    private TeacherService teacherService;
+    private TeacherService teacherService = TeacherServiceImpl.getInstance();
 
-    public TeacherServlet() {
-        this.teacherService = TeacherServiceImpl.getInstance();
-    }
 
-    public TeacherServlet(TeacherService teacherService) {
+    public void setTeacherService(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
 

@@ -44,7 +44,9 @@ class TeacherServletTest {
 
         when(teacherService.findAll()).thenReturn(teacherDtos);
 
-        new TeacherServlet(teacherService).doGet(request, response);
+        TeacherServlet teacherServlet = new TeacherServlet();
+        teacherServlet.setTeacherService(teacherService);
+        teacherServlet.doGet(request, response);
 
         verify(response).setContentType("application/json");
         verify(response).setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -66,7 +68,9 @@ class TeacherServletTest {
 
         when(teacherService.findTeacherById(Integer.parseInt(teacherId))).thenReturn(teacherDto);
 
-        new TeacherServlet(teacherService).doGet(request, response);
+        TeacherServlet teacherServlet = new TeacherServlet();
+        teacherServlet.setTeacherService(teacherService);
+        teacherServlet.doGet(request, response);
 
         verify(response).setContentType("application/json");
         verify(response).setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -74,7 +78,6 @@ class TeacherServletTest {
         assertTrue(result.contains("\"id\":1"));
         assertTrue(result.contains("\"name\":\"Test Teacher\""));
     }
-
 
 
     @Test
@@ -90,7 +93,9 @@ class TeacherServletTest {
         teacherDto.setName("Test Teacher");
 
 
-        new TeacherServlet(teacherService).doPost(request, response);
+        TeacherServlet teacherServlet = new TeacherServlet();
+        teacherServlet.setTeacherService(teacherService);
+        teacherServlet.doPost(request, response);
 
         verify(teacherService).addTeacher(teacherDto);
         verify(response).setStatus(HttpServletResponse.SC_OK);
@@ -110,7 +115,9 @@ class TeacherServletTest {
         teacherDto.setName("Test Teacher");
 
 
-        new TeacherServlet(teacherService).doPut(request, response);
+        TeacherServlet teacherServlet = new TeacherServlet();
+        teacherServlet.setTeacherService(teacherService);
+        teacherServlet.doPut(request, response);
 
         verify(teacherService).updateTeacher(teacherDto);
         verify(response).setStatus(HttpServletResponse.SC_OK);
@@ -124,7 +131,9 @@ class TeacherServletTest {
         String pathInfo = "/1";
         when(request.getPathInfo()).thenReturn(pathInfo);
 
-        new TeacherServlet(teacherService).doDelete(request, response);
+        TeacherServlet teacherServlet = new TeacherServlet();
+        teacherServlet.setTeacherService(teacherService);
+        teacherServlet.doDelete(request, response);
 
         verify(teacherService).deleteTeacher(Integer.parseInt(pathInfo.substring(1)));
         verify(response).setStatus(HttpServletResponse.SC_NO_CONTENT);

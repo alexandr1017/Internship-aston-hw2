@@ -20,13 +20,10 @@ import java.util.Collection;
 @WebServlet("/courses/*")
 public class CourseServlet extends HttpServlet {
 
-    private CourseService courseService;
+    private CourseService courseService = CourseServiceImpl.getInstance();
 
-    public CourseServlet() {
-        this.courseService = CourseServiceImpl.getInstance();
-    }
 
-    public CourseServlet(CourseService courseService) {
+    public void setCourseService(CourseService courseService) {
         this.courseService = courseService;
     }
 

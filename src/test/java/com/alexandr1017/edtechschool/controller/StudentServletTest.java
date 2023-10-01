@@ -45,7 +45,10 @@ class StudentServletTest {
 
         when(studentService.findAll()).thenReturn(studentDtos);
 
-        new StudentServlet(studentService).doGet(request, response);
+        StudentServlet studentServlet = new StudentServlet();
+        studentServlet.setStudentService(studentService);
+        studentServlet.doGet(request, response);
+
 
         verify(response).setContentType("application/json");
         verify(response).setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -68,7 +71,9 @@ class StudentServletTest {
 
         when(studentService.getStudentById(Integer.parseInt(studentId))).thenReturn(studentDto);
 
-        new StudentServlet(studentService).doGet(request, response);
+        StudentServlet studentServlet = new StudentServlet();
+        studentServlet.setStudentService(studentService);
+        studentServlet.doGet(request, response);
 
         verify(response).setContentType("application/json");
         verify(response).setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -91,7 +96,9 @@ class StudentServletTest {
         studentDto.setName("Test Student");
 
 
-        new StudentServlet(studentService).doPost(request, response);
+        StudentServlet studentServlet = new StudentServlet();
+        studentServlet.setStudentService(studentService);
+        studentServlet.doPost(request, response);
 
 
         verify(studentService).addStudent(studentDto);
@@ -111,7 +118,9 @@ class StudentServletTest {
         studentDto.setName("Test Student");
 
 
-        new StudentServlet(studentService).doPut(request, response);
+        StudentServlet studentServlet = new StudentServlet();
+        studentServlet.setStudentService(studentService);
+        studentServlet.doPut(request, response);
 
         verify(studentService).updateStudent(studentDto);
         verify(response).setStatus(HttpServletResponse.SC_OK);
@@ -125,7 +134,9 @@ class StudentServletTest {
         String pathInfo = "/1";
         when(request.getPathInfo()).thenReturn(pathInfo);
 
-        new StudentServlet(studentService).doDelete(request, response);
+        StudentServlet studentServlet = new StudentServlet();
+        studentServlet.setStudentService(studentService);
+        studentServlet.doDelete(request, response);
 
         verify(studentService).deleteStudentById(Integer.parseInt(pathInfo.substring(1)));
         verify(response).setStatus(HttpServletResponse.SC_NO_CONTENT);
