@@ -4,6 +4,7 @@ package com.alexandr1017.edtechschool.service.impl;
 import com.alexandr1017.edtechschool.dao.StudentDao;
 
 
+import com.alexandr1017.edtechschool.dao.impl.StudentDaoImpl;
 import com.alexandr1017.edtechschool.dto.CourseDto;
 import com.alexandr1017.edtechschool.dto.StudentDto;
 import com.alexandr1017.edtechschool.exception.ItemNotFoundException;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class StudentServiceImpl implements StudentService {
     private static final StudentServiceImpl INSTANCE = new StudentServiceImpl();
-    private StudentDao studentDao;
+    private StudentDao studentDao = StudentDaoImpl.getInstance();
 
 
     private StudentServiceImpl() {

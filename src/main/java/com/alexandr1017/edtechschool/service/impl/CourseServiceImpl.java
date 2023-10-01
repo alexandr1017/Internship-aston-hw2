@@ -1,6 +1,7 @@
 package com.alexandr1017.edtechschool.service.impl;
 
 import com.alexandr1017.edtechschool.dao.CourseDao;
+import com.alexandr1017.edtechschool.dao.impl.CourseDaoImpl;
 import com.alexandr1017.edtechschool.dto.CourseDto;
 import com.alexandr1017.edtechschool.dto.StudentDto;
 import com.alexandr1017.edtechschool.exception.ItemNotFoundException;
@@ -18,7 +19,7 @@ public class CourseServiceImpl implements CourseService {
 
     private static final CourseServiceImpl INSTANCE = new CourseServiceImpl();
 
-    private CourseDao courseDao;
+    private CourseDao courseDao = CourseDaoImpl.getInstance();
 
     private CourseServiceImpl() {
     }

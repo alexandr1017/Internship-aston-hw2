@@ -2,6 +2,10 @@ package com.alexandr1017.edtechschool.service.impl;
 
 import com.alexandr1017.edtechschool.dao.*;
 
+import com.alexandr1017.edtechschool.dao.impl.CourseDaoImpl;
+import com.alexandr1017.edtechschool.dao.impl.ManagementDaoImpl;
+import com.alexandr1017.edtechschool.dao.impl.StudentDaoImpl;
+import com.alexandr1017.edtechschool.dao.impl.TeacherDaoImpl;
 import com.alexandr1017.edtechschool.exception.ItemNotFoundException;
 import com.alexandr1017.edtechschool.model.Course;
 import com.alexandr1017.edtechschool.model.Student;
@@ -13,10 +17,10 @@ public class ManagementServiceImpl implements ManagementService {
 
     private static final ManagementServiceImpl INSTANCE = new ManagementServiceImpl();
 
-    private ManagementDao managementDao;
-    private CourseDao courseDao;
-    private StudentDao studentDao;
-    private TeacherDao teacherDao;
+    private ManagementDao managementDao = ManagementDaoImpl.getInstance();
+    private CourseDao courseDao = CourseDaoImpl.getInstance();
+    private StudentDao studentDao = StudentDaoImpl.getInstance();
+    private TeacherDao teacherDao = TeacherDaoImpl.getInstance();
 
     private ManagementServiceImpl() {
     }
