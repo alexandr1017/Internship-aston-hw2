@@ -1,4 +1,4 @@
-# edTechREST
+# edTechREST (JDBC, Servlets, MySQL, Docker, Testcontainers, HikariCP)
 
 ## Endpoints
 
@@ -66,7 +66,6 @@
 }
 ```
 ### DELETE
-DELETE
 - `http://localhost:8080/courses/2` - Удалить курс с id = 2
 - `http://localhost:8080/students/2` - Удалить студента с id = 2
 - `http://localhost:8080/management?studentId=1&courseId=1` - Удалить студента с id = 1 с курса c id = 1
