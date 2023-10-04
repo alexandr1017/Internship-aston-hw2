@@ -5,9 +5,14 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.containers.startupcheck.IndefiniteWaitOneShotStartupCheckStrategy;
+import org.testcontainers.containers.startupcheck.MinimumDurationRunningStartupCheckStrategy;
+import org.testcontainers.containers.startupcheck.OneShotStartupCheckStrategy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.MountableFile;
+
+import java.time.Duration;
 
 @Testcontainers
 public abstract class AbstractDaoTest {
@@ -22,7 +27,9 @@ public abstract class AbstractDaoTest {
 
     @Container
     public static MySQLContainer<?> mysqlContainer = new MySQLContainer<>()
-            .withCopyFileToContainer(MountableFile.forClasspathResource("sql/createScheama.sql"), "/docker-entrypoint-initdb.d/");
+            .withCopyFileToContainer(MountableFile.forClasspathResource("sql/createScheama.sql"), "/docker-entrypoint-initdb.d/").withStartupCheckStrategy(
+                    new MinimumDurationRunningStartupCheckStrategy(Duration.ofSeconds(1))
+            );
 
     @BeforeAll
     public static void setUp() {
