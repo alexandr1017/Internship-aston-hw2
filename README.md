@@ -1,6 +1,6 @@
 # edTechREST (JDBC, Servlets, MySQL, Docker, Testcontainers, HikariCP)
 
-PUSHPUSH
+PUSH
 
 ## Endpoints
 
