@@ -27,7 +27,7 @@ public abstract class AbstractDaoTest {
 
     @Container
     public static MySQLContainer<?> mysqlContainer = new MySQLContainer<>()
-            .withCopyFileToContainer(MountableFile.forClasspathResource("sql/createScheama.sql"), "/docker-entrypoint-initdb.d/");
+            .withCopyFileToContainer(MountableFile.forClasspathResource("sql/createScheama.sql"), "/docker-entrypoint-initdb.d/").withStartupCheckStrategy(new MinimumDurationRunningStartupCheckStrategy(Duration.ofSeconds(10)));
 
     @BeforeAll
     public static void setUp() {
