@@ -7,7 +7,8 @@ CREATE TABLE course (
                         name VARCHAR(50) NOT NULL,
                         duration INT NOT NULL,
                         price INT NOT NULL,
-                        creating_date DATE NOT NULL
+                        creating_date DATE NOT NULL,
+                        teacher_id INT
 );
 
 CREATE TABLE student (
@@ -25,17 +26,13 @@ CREATE TABLE course_student (
                                 FOREIGN KEY (student_id) REFERENCES student(id)
 );
 
+
 CREATE TABLE teacher (
                          id INT NOT NULL PRIMARY KEY auto_increment,
                          name VARCHAR(50) NOT NULL,
                          age INT NOT NULL,
                          hire_date DATE NOT NULL
 );
-
-
-ALTER TABLE course
-    ADD COLUMN teacher_id INT,
-    ADD FOREIGN KEY (teacher_id) REFERENCES teacher(id);
 
 INSERT INTO teacher (name, age, hire_date) VALUES
                                                ('Иван Сидоров',24, '2023-12-10'),

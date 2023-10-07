@@ -12,7 +12,7 @@ services:
       LANGUAGE: ru_RU:ru
       LC_ALL: ru_RU.UTF-8
     ports:
-      - '4306:3306'
+      - '5306:3306'
     volumes:
       - ./data/edtechDump.sql:/docker-entrypoint-initdb.d/edtechDump.sql
 volumes:
