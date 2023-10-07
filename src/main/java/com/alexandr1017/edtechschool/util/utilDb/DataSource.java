@@ -18,9 +18,8 @@ public class DataSource {
             config.setPassword(PropertiesUtil.get(PASS_KEY));
             config.setDriverClassName("com.mysql.cj.jdbc.Driver");
             config.setMinimumIdle(0);
-            config.setConnectionTimeout(30000);
-            config.setIdleTimeout(35000);
-            config.setMaxLifetime(45000);
+            config.setIdleTimeout(28000*1000);
+            config.setMaxLifetime(28000*1000);
 
             ds = new HikariDataSource(config);
         } catch (Exception e) {
