@@ -13,10 +13,10 @@ public class DataSource {
 
     static {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             config.setJdbcUrl(PropertiesUtil.get(URL_KEY));
             config.setUsername(PropertiesUtil.get(USER_KEY));
             config.setPassword(PropertiesUtil.get(PASS_KEY));
+            config.setDriverClassName("com.mysql.cj.jdbc.Driver");
             ds = new HikariDataSource(config);
         } catch (Exception e) {
             e.printStackTrace();
